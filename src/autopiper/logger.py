@@ -35,15 +35,3 @@ def setup_logger(log_level=logging.INFO, file_handler_path=None):
     logger.addHandler(console_handler)
 
     return logger
-
-
-# Example usage
-if __name__ == "__main__":
-    logger = setup_logger()
-
-    # Test logging at different levels
-    logger.debug("This is a debug message")
-    logger.info("This is an info message")
-    logger.warning("This is a warning message")
-    logger.error("This is an error message")
-    logger.critical("This is a critical message")
