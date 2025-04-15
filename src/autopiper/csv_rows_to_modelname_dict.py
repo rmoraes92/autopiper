@@ -1,5 +1,6 @@
 from pathlib import Path
 from autopiper.read_csv_to_dict import read_csv_to_dict
+from autopiper.models import VoiceModel
 
 
 def csv_rows_to_modelname_dict(csv_file: Path | None = None) -> dict[str, str]:
@@ -33,19 +34,7 @@ def csv_rows_to_modelname_dict(csv_file: Path | None = None) -> dict[str, str]:
     ret = {}
 
     for row in read_csv_to_dict(csv_file):
-        # Convert the row to a dictionary
-        row_dict = dict(row)
-
-        # language = row_dict["Language"]
-        languagecode = row_dict["LanguageCode"]
-        modelname = row_dict["ModelName"]
-        quality = row_dict["Quality"]
-        onnxmodellink = row_dict["OnnxModelLink"]
-        onnxmodelconfiglink = row_dict["OnnxModelConfigLink"]
-
-        ret[f"{languagecode}.{modelname}.{quality}"] = {
-            "OnnxModelLink": onnxmodellink,
-            "OnnxModelConfigLink": onnxmodelconfiglink,
-        }
+        voice_model = VoiceModel.from_csv_dict(row)
+        ret[voice_model.get_uid()] = voice_model
 
     return ret
