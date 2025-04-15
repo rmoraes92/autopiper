@@ -4,18 +4,24 @@ AutoPiper is a thin command-line interface (CLI) wrapper around the
 [piper](https://github.com/rhasspy/piper?tab=readme-ov-file) project.
 
 The goal here is to help you:
+
 - downloading piper
 - downloading void models for piper
 
 ## Features
 
-- **Initialize Projects**: Quickly set up a project with default settings.
-- **List Models**: Display a list of available ONNX-mapped voice models.
-- **Download Assets**: Download specific assets from GitHub releases, including voice models and configurations.
+- [x] **Initialize Projects**: Quickly set up a project with default settings.
+- [x] **List Voice Models**: Display a list of available ONNX-mapped voice
+      models.
+- [ ] **Download Voice Models**: Download specific assets from GitHub releases,
+      including voice models and configurations.
 
 ## Installation
 
-To install AutoPiper, clone the repository and install the dependencies using [Poetry](https://python-poetry.org/):
+`pip install --user autopiper`
+
+To install AutoPiper from source clone the repository and install the
+dependencies using [Poetry](https://python-poetry.org/):
 
 ```bash
 # Clone the repository
@@ -26,18 +32,24 @@ cd autopiper
 poetry install
 ```
 
-## Usage
+## 1 - Usage
 
 AutoPiper provides a CLI with the following commands:
 
-### Initialize a Project
+### 1.1 - Initialize a Project with Piper v2023.11.14-2 and US Voice
+
+```bash
+autopiper init
+```
+
+#### 1.2 - Initialize a Project with Piper v2023.11.14-2 and Danish Voice
 
 ```bash
 autopiper init \
-    --tag-name <tag_name> \
-    --lang-code <language_code> \
-    --voice-model-name <model_name> \
-    --quality <quality>
+    --tag-name 2023.11.14-2 \
+    --lang-code da_DK \
+    --voice-model-name talesyntese \
+    --quality medium
 ```
 
 - `--tag-name`: Tag name of the release to download (default: latest).
@@ -55,12 +67,15 @@ This command lists all available ONNX-mapped voice models.
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file
+for details.
 
 ## Contributing
 
-Contributions are welcome! Feel free to open issues or submit pull requests to improve the project.
+Contributions are welcome! Feel free to open issues or submit pull requests to
+improve the project.
 
 ## Acknowledgments
 
-AutoPiper leverages the [Piper](https://github.com/rhasspy/piper) project for voice synthesis capabilities.
+AutoPiper leverages the [Piper](https://github.com/rhasspy/piper) project for
+voice synthesis capabilities.
