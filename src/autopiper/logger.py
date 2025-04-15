@@ -1,9 +1,10 @@
 import logging
+from pathlib import Path
 import sys
 import os
 
 
-def setup_logger(log_level=logging.INFO, file_handler_path=None):
+def setup_logger(log_level=logging.INFO, file_handler_path: Path | None = None):
     """
     Set up a logger that outputs to both stdout and a file named logs.txt
 
