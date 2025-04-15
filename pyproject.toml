@@ -2,17 +2,20 @@
 name = "autopiper"
 version = "0.1.0"
 description = ""
-authors = [{ name = "Ramon Moraes" }]
+authors = [{ name = "Ramon Moraes", email = "ramonmoraes.foss@gmail.com" }]
 readme = "README.md"
+license = "MIT"
 requires-python = ">=3.13"
 dependencies = ["requests (>=2.32.3,<3.0.0)"]
 
 [tool.poetry]
 packages = [{ include = "autopiper", from = "src" }]
+include = [
+  "assets/"  # Include the entire 'assets' directory
+]
 
 [tool.poetry.scripts]
 autopiper = "autopiper.cli:main"
-
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
