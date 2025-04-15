@@ -1,10 +1,8 @@
 from pathlib import Path
 import requests
 import os
-from autopiper.logger import setup_logger
+from autopiper import logger
 from autopiper.exceptions import GithubReleaseAssetNotFoundError
-
-logger = setup_logger()
 
 
 def download_github_release_asset(
@@ -12,7 +10,7 @@ def download_github_release_asset(
     repo: str,
     tag_name: str,
     asset_name: str,
-    output_path: str | None = None,
+    output_path: Path,
 ):
     """
     Downloads a specific asset from a GitHub release.
@@ -28,11 +26,9 @@ def download_github_release_asset(
         bool: True if the download was successful, False otherwise.
     """
 
-    output_path = output_path or os.getcwd()
-    output_path = os.path.expanduser(output_path)
-    file_path = os.path.join(output_path, asset_name)
+    file_path = Path(output_path, asset_name)
 
-    if os.path.exists(file_path):
+    if file_path.is_file():
         logger.debug(
             f"file '{file_path}' already exists, skipping download of '{asset_name}'"
         )
@@ -72,7 +68,7 @@ def download_github_release_asset(
 
     os.makedirs(output_path, exist_ok=True)
 
-    with open(file_path, "wb") as f:
+    with file_path.open("wb") as f:
         for chunk in download_response.iter_content(chunk_size=8192):
             f.write(chunk)
 
@@ -80,4 +76,4 @@ def download_github_release_asset(
         f"successfully downloaded '{asset_name}' from release '{tag_name}' of {owner}/{repo} to '{file_path}'"
     )
 
-    return Path(file_path)
+    return file_path

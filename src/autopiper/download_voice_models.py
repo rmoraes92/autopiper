@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 import requests
 
+from autopiper import settings
 from autopiper import logger
 from autopiper.models import VoiceModel
 
@@ -10,7 +11,8 @@ def download_voice_model(voice_model: VoiceModel):
     """
     Downloads a Voice Model (onnx model and onnx json config files).
     """
-    models_dir = Path(os.path.expanduser("~/.config/autopiper/models"))
+    # models_dir = Path(os.path.expanduser("~/.config/autopiper/models"))
+    models_dir = settings.APP_ASSET_MODEL_DIR
     models_dir.mkdir(parents=True, exist_ok=True)
 
     # Download the ONNX model
