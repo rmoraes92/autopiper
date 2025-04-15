@@ -3,8 +3,10 @@ from autopiper import logger
 from autopiper.controllers import download_piper_package
 from autopiper.csv_rows_to_modelname_dict import csv_rows_to_modelname_dict
 
-def main():
-    parser = argparse.ArgumentParser(description="cli manager for c++ piper project")
+
+def main() -> None:
+    parser = argparse.ArgumentParser(
+        description="cli manager for c++ piper project")
 
     subparsers = parser.add_subparsers(dest="command")
 
@@ -37,6 +39,12 @@ def main():
     )
     init_parser.set_defaults(func=init_command)
 
+    lst_models = subparsers.add_parser(
+        "list-models", help="list onnix mapped models",
+    )
+
+    lst_models.set_defaults(func=list_models)
+
     args = parser.parse_args()
     args.func(args)
 
@@ -51,6 +59,11 @@ def init_command(args: argparse.Namespace) -> None:
     d = csv_rows_to_modelname_dict()[key]
     logger.info(f"Model link: {d['OnnxModelLink']}")
     logger.info(f"Model config link: {d['OnnxModelConfigLink']}")
+
+
+def list_models(args: argparse.Namespace) -> None:
+    for k, v in csv_rows_to_modelname_dict().items():
+        print(k)
 
 
 if __name__ == "__main__":
