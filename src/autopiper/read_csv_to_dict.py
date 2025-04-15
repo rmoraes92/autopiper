@@ -1,5 +1,6 @@
 import csv
 from typing import Generator
+from autopiper.read_asset import open_asset
 
 
 def read_csv_to_dict(csv_file) -> Generator[dict, None, None]:
@@ -20,7 +21,8 @@ def read_csv_to_dict(csv_file) -> Generator[dict, None, None]:
     :param csv_file: Path to the CSV file.
     :return: List of dictionaries where each dictionary represents a row.
     """
-    with open(csv_file, mode="r", encoding="utf-8") as file:
+    #with open(csv_file, mode="r", encoding="utf-8") as file:
+    with open_asset(csv_file) as file:
         reader = csv.DictReader(file)
         for row in reader:
             yield row
