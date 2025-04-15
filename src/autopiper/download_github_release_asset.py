@@ -27,6 +27,17 @@ def download_github_release_asset(
     Returns:
         bool: True if the download was successful, False otherwise.
     """
+
+    output_path = output_path or os.getcwd()
+    output_path = os.path.expanduser(output_path)
+    file_path = os.path.join(output_path, asset_name)
+
+    if os.path.exists(file_path):
+        logger.debug(
+            f"file '{file_path}' already exists, skipping download of '{asset_name}'"
+        )
+        return Path(file_path)
+
     api_url = f"https://api.github.com/repos/{owner}/{repo}/releases/tags/{tag_name}"
 
     response = requests.get(api_url)
@@ -59,9 +70,6 @@ def download_github_release_asset(
     download_response.raise_for_status()
     logger.debug(f"download response status code: {download_response.status_code}")
 
-    output_path = output_path or os.getcwd()
-    output_path = os.path.expanduser(output_path)
-    file_path = os.path.join(output_path, asset_name)
     os.makedirs(output_path, exist_ok=True)
 
     with open(file_path, "wb") as f:
