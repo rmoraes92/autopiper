@@ -3,7 +3,7 @@ from autopiper.read_csv_to_dict import read_csv_to_dict
 from autopiper.models import VoiceModel
 
 
-def csv_rows_to_modelname_dict(csv_file: Path | None = None) -> dict[str, str]:
+def csv_rows_to_modelname_dict(csv_file: Path | None = None) -> dict[str, VoiceModel]:
     """
     Reads a CSV file and converts its rows into a dictionary with ModelName as the key and OnnxModelLink as the value.
 
