@@ -8,12 +8,14 @@ from autopiper import settings
 def download_piper_package(tag_name: str | None) -> None:
     # https://github.com/rhasspy/piper
     tag_name = tag_name or "2023.11.14-2"
+    asset_name = "piper_linux_x86_64.tar.gz"
+    output_path = settings.CACHE_DIR.joinpath(tag_name, asset_name)
     tar_gz_path = download_github_release_asset(
         owner="rhasspy",
         repo="piper",
         tag_name=tag_name,
-        asset_name="piper_linux_x86_64.tar.gz",
-        output_path=settings.CACHE_DIR,
+        asset_name=asset_name,
+        output_path=output_path,
     )
     tar_gz_extract_dir = settings.APP_ASSET_DIR.joinpath(tag_name)
     file = tarfile.open(tar_gz_path)
