@@ -2,11 +2,12 @@ import argparse
 from autopiper import logger
 from autopiper.controllers import download_piper_package
 from autopiper.csv_rows_to_modelname_dict import csv_rows_to_modelname_dict
+from autopiper.download_voice_models import download_voice_model
+from autopiper.models import VoiceModel
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(
-        description="cli manager for c++ piper project")
+    parser = argparse.ArgumentParser(description="cli manager for c++ piper project")
 
     subparsers = parser.add_subparsers(dest="command")
 
@@ -40,7 +41,8 @@ def main() -> None:
     init_parser.set_defaults(func=init_command)
 
     lst_models = subparsers.add_parser(
-        "list-models", help="list onnix mapped models",
+        "list-models",
+        help="list onnix mapped models",
     )
 
     lst_models.set_defaults(func=list_models)
@@ -55,15 +57,18 @@ def init_command(args: argparse.Namespace) -> None:
     logger.info("Project initialized with default settings.")
     download_piper_package(tag_name)
     logger.info("Piper package downloaded successfully.")
-    key = f"{args.lang_code}.{args.voice_model_name}.{args.quality}"
-    d = csv_rows_to_modelname_dict()[key]
-    logger.info(f"Model link: {d['OnnxModelLink']}")
-    logger.info(f"Model config link: {d['OnnxModelConfigLink']}")
+    key = f"{args.lang_code}-{args.voice_model_name}-{args.quality}"
+    voice_model: VoiceModel = csv_rows_to_modelname_dict()[key]
+    download_voice_model(voice_model)
+    logger.info(f"voice model link downloaded: {voice_model.onnx_model_link}")
+    logger.info(
+        f"voice model config link downloaded: {voice_model.onnx_model_config_link}"
+    )
 
 
 def list_models(args: argparse.Namespace) -> None:
-    for k, v in csv_rows_to_modelname_dict().items():
-        print(k)
+    for model_uid_str, _voice_model in csv_rows_to_modelname_dict().items():
+        print(model_uid_str)
 
 
 if __name__ == "__main__":
