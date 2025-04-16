@@ -1,4 +1,11 @@
+env=local
+
+ifneq (,$(wildcard $(env).env))
+include $(env).env
+endif
+
 test:
 	poetry run python -m unittest discover -s tests
-init:
-	poetry run autopiper init
+
+publish_to_pypi:
+	poetry publish --build --skip-existing
