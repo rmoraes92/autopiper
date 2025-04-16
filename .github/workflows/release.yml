@@ -1,0 +1,33 @@
+name: Relase for PyPI
+
+on:
+  workflow_run:
+    workflows: ["Testing"]
+    branches: ["release/*"]
+    types:
+      - completed
+
+env:
+  POETRY_PYPI_TOKEN_PYPI: ${{ secrets.POETRY_PYPI_TOKEN_PYPI }}
+
+jobs:
+  release_pypi:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - name: Install OS Dependencies
+        run: sudo apt-get install -y make
+
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.13
+
+      - name: Setup Poetry
+        run: pip install poetry
+
+      - name: Publish To PYPI
+        run: make publish_to_pypi
