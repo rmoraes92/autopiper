@@ -57,10 +57,23 @@ autopiper init \
 - `--voice-model-name`: Voice model name to use (default: `amy`).
 - `--quality`: Quality of the voice model (default: `low`).
 
-### List Available Models
+### 1.3 - List Available Models
 
 ```bash
 autopiper list-models
+```
+
+### 1.4 - List Installed Models
+
+```bash
+autopiper list-models --installed
+```
+
+### 1.5 - Generate Audio File
+
+```bash
+echo "hello world" > hello.txt
+autopiper text-to-speech hello.txt hello.wav --voide-model-id en_US-amy-low
 ```
 
 This command lists all available ONNX-mapped voice models.
