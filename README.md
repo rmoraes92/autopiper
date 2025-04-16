@@ -32,6 +32,15 @@ cd autopiper
 poetry install
 ```
 
+## Supported Platform
+
+- [x] Linux - x86_64
+- [ ] Linux - aarch64
+- [ ] Linux - armv7l
+- [ ] Macos - aarch64
+- [ ] Macos - x64
+- [ ] Windows - amd64
+
 ## 1 - Usage
 
 AutoPiper provides a CLI with the following commands:
