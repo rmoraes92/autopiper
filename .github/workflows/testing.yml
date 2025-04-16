@@ -1,0 +1,34 @@
+name: Testing
+
+on:
+  push:
+    branches: ["*"]
+
+jobs:
+  unit_testing:
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.13"]
+        poetry-version: ["latest", "main", "1.8.4"]
+        os: [ubuntu-22.04, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Setup Poetry
+        uses: abatilo/actions-poetry@v2
+        with:
+          poetry-version: ${{ matrix.poetry-version }}
+
+      - name: Installing Python Dependencies
+        run: poetry install
+
+      - name: Running Unit Tests
+        run: poetry run python -m unittest discover -s tests
