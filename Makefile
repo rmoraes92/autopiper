@@ -9,3 +9,7 @@ test:
 
 publish_to_pypi:
 	poetry publish --build --skip-existing
+
+
+tail_cicd:
+	gh run watch
