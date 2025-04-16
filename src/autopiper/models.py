@@ -27,12 +27,16 @@ class VoiceModel:
     def get_uid(self) -> str:
         """
         Generate a unique identifier for the voice model based on its attributes.
+        Format:
+            "{self.language_code}-{self.model_name}-{self.quality}"
         """
         return f"{self.language_code}-{self.model_name}-{self.quality}"
 
     def get_filename(self) -> str:
         """
         Generate a filename for the voice model based on its attributes.
+        Format:
+            "{self.language_code}-{self.model_name}-{self.quality}.onnx"
         """
         return f"{self.get_uid()}.onnx"
 
