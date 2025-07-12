@@ -1,5 +1,5 @@
 name: Relase for PyPI
-
+# TODO why is this not triggering when pushing new release/* branches?
 on:
   workflow_run:
     workflows: ["Testing"]
